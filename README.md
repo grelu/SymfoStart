@@ -25,4 +25,28 @@ For...
 
 To start quickly a Symfony App !
 
+How to
+------
+
+- Clone SymfoStart :
+git clone https://github.com/grelu/SymfoStart.git myNewApp
+
+- Update vendor (run this command in myNewApp directory ):
+php composer update (or php composer.phar update)
+
+- Answer the questions (database_host...)
+
+- Create database :
+php bin/console doctrine:database:create
+
+- Update schema :
+php bin/console doctrine:schema:update --force
+
+- Create your first user :
+php bin/console fos:user:create
+
+- And go to your login page :
+http://localhost/myNewApp/web/app_dev.php/
+
+
 Enjoy!
