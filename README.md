@@ -42,6 +42,9 @@ php bin/console doctrine:database:create
 - Update schema :
 php bin/console doctrine:schema:update --force
 
+- Install Assets :
+php bin/console assets:install
+
 - Create your first user :
 php bin/console fos:user:create
 
