@@ -4,49 +4,73 @@
         <meta charset="UTF-8" />
         <title>{% block title %}AppName{% endblock %}</title>		
 		
-		<link rel="stylesheet" href="{{asset('bootstrap-3.3.7-dist/css/bootstrap.min.css')}}" type="text/css" />
-		<link rel="stylesheet" href="{{asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" type="text/css" />
-		<link rel="stylesheet" href="{{asset('datetimepicker-4.17.42/bootstrap-datetimepicker.min.css')}}" type="text/css" />
-		<link rel="stylesheet" href="{{asset('jquery-ui-1.12.1/jquery-ui.min.css')}}" type="text/css" />
+		<link rel="stylesheet" href="{{asset('bundles/app/bootstrap-3.3.7-dist/css/bootstrap.min.css')}}" type="text/css" />
+		<link rel="stylesheet" href="{{asset('bundles/app/font-awesome-4.7.0/css/font-awesome.min.css')}}" type="text/css" />
+		<link rel="stylesheet" href="{{asset('bundles/app/datetimepicker-4.17.42/bootstrap-datetimepicker.min.css')}}" type="text/css" />
+		<link rel="stylesheet" href="{{asset('bundles/app/jquery-ui-1.12.1/jquery-ui.min.css')}}" type="text/css" />
 		
 		{% block stylesheets %}{% endblock %}
         
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-	
-        {% block body %}{% endblock %}
-		
-		{% if not app.user or app.request.attributes.get('_route') ==  'fos_user_registration_confirmed' %}
-		<div class="container" style='margin-top:50px;'>
-			<div class="row">
-				<div class="col-md-7 col-md-offset-3">
-					<div class="panel panel-login">
-						<div class="panel-heading">
-							<h2>AppName</h2>
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-12">
-									{% block fos_user_content %}{% endblock fos_user_content%}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<nav class="navbar navbar-default navbar-static-top">
+		  <div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  {%if app.user %}
+				<a class="navbar-brand" href="{{path('home_page')}}">
+					AppName
+				</a>
+			  {%endif%}
 			</div>
-		</div>
-		{%endif%}
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  {%if app.user %}
+				  <ul class="nav navbar-nav">				
+					{%if is_granted('ROLE_ADMIN')%}
+						<li class="dropdown">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'admin.menu'|trans}}<span class="caret"></span></a>
+						  <ul class="dropdown-menu">							
+							<li role="separator" class="divider"></li>
+						  </ul>
+						</li>
+					{%endif%}
+				  </ul>
+				
+				  <ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class='fa fa-user'></i> {{ app.user.firstname }} {{ app.user.lastname }} <span class="caret"></span></a>
+					  <ul class="dropdown-menu">
+						<li><a href="{{path('fos_user_change_password')}}"><i class='fa fa-pencil'></i> {{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="{{path('fos_user_security_logout')}}"><i class='fa fa-sign-out'></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+					  </ul>
+					</li>
+				  </ul>
+				{%endif%} 
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+        
+		{% block body %}{% endblock %}
 		
 		{% block javascripts %}
 		
 			{% javascripts
 				'bundles/fosjsrouting/js/router.js'
-				'jQuery-3.1.1/jquery.min.js'
-				'bootstrap-3.3.7-dist/js/bootstrap.min.js'
-				'moment-2.17/moment.min.js'
-				'datetimepicker-4.17.42/bootstrap-datetimepicker.min.js' 
-				'jquery-ui-1.12.1/jquery-ui.min.js'
+				'bundles/app/jQuery-3.1.1/jquery.min.js'
+				'bundles/app/bootstrap-3.3.7-dist/js/bootstrap.min.js'
+				'bundles/app/moment-2.17/moment.min.js'
+				'bundles/app/datetimepicker-4.17.42/bootstrap-datetimepicker.min.js' 
+				'bundles/app/jquery-ui-1.12.1/jquery-ui.min.js'
 			%}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 				<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
