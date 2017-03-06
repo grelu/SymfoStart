@@ -76,6 +76,9 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationType    
+    from_email:
+        address: test@localhost.com
+        sender_name: "Test"
 # Assetic
 assetic:
     debug:          '%kernel.debug%'
